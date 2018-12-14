@@ -1,0 +1,69 @@
+<html>
+<head>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse:collapse;
+}
+th, td {
+  display:block;
+  padding: 5px;
+}
+tr{display: block; float:left;}
+
+h1.v{
+	
+}
+
+</style>
+</head>
+<body>
+<input type="text" name="num" id="num"><br>
+<button onclick="startClustering()">Generate</button>
+<br>
+<table id="out"></table>
+<form>
+	
+</form>
+<br>
+<p id="buffert"></p>
+<p id="test"></p>
+
+
+
+<script>
+
+function startClustering(){
+	document.getElementById("out").innerHTML = "";
+	fetch('rest/UserService/kMean/' + document.getElementById("num").value)
+	.then((res) => res.text())
+	.then((data) => {
+		var centoidData = data.split("¤");
+		//var table = document.createElement('table');
+		var table = document.getElementById("out");
+		var tableBody = document.createElement('tbody');
+		centoidData.forEach(function(centoidPart){
+			printClustering(centoidPart,table,tableBody);
+		});
+	})
+}
+
+function printClustering(centoidData,table,tableBody){
+	var row = document.createElement('tr');
+	var toPrint = centoidData.split("€");
+
+	toPrint.forEach(function(cellData) {
+	      var cell = document.createElement('td');
+	      cell.appendChild(document.createTextNode(cellData));
+	      row.appendChild(cell);
+	    });
+
+	tableBody.appendChild(row);
+
+	table.appendChild(tableBody);
+	document.body.appendChild(table);
+}
+</script>
+
+</body>
+</html>
