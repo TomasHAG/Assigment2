@@ -1,5 +1,7 @@
 package com.System;
 
+import java.awt.List;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Set;
 
@@ -7,19 +9,22 @@ public class centroid extends data{
 	
 	private Hashtable<String, data>  blog;
 	private Hashtable<String, data> oldblog;
+	private ArrayList<String> blogsContain;
 
 	centroid(String name) {
 		super(name);
 		blog = new Hashtable<String, data>();
+		blogsContain = new ArrayList<String>();
 	}
 	
 	public void assignBlog(String blog, data Data) {
-		this.blog.put(blog,Data);
+		this.blog.put(blog,Data);;
 	}
 	
 	public void clense() {
 		oldblog = blog;
 		blog = new Hashtable<String, data>();
+		blogsContain.clear();
 	}
 	
 	public boolean isThereAnychange() {
@@ -65,7 +70,7 @@ public class centroid extends data{
 			else
 				setData(buffertA[nr], words.get(buffertA[nr]).intValue() - (int)(buffertI[nr]/2));*/
 			//setData(buffertA[nr], buffertI[nr]);
-			setData(buffertA[nr], words.get(buffertA[nr]).intValue() - (int)(buffertI[nr] * 0.75));
+			setData(buffertA[nr],(int)(words.get(buffertA[nr]) + (words.get(buffertA[nr]) - (int)(buffertI[nr]) * 0.75)));
 		}
 		
 		if(counter == blog.size())
@@ -75,6 +80,28 @@ public class centroid extends data{
 	
 	public int nrOfBlogs() {
 		return blog.size();
+	}
+	
+	public String allBlogs() {
+		String str = getName() + "€";
+		
+		Set<String> key = blog.keySet();
+		
+		for(String b : key) {
+			str += b + "€";
+		}
+		
+		return str.substring(0, str.length() - 3);
+	}
+	public String[] arrayOfBlogs() {
+		Set<String> key = blog.keySet();
+		String ret[] = new String[key.size()];
+		
+		int index = 0;
+		for(String s : key) {
+			ret[index++] = s;
+		}
+		return ret;
 	}
 
 }

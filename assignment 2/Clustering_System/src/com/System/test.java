@@ -3,8 +3,12 @@ package com.System;
 public class test {
 
 	public static void main(String[] args) {
-		clusterSystem sys = new clusterSystem("C:\\Users\\Tomas\\Desktop\\web Intelegence\\blogdata.txt");
+		UserService tes = new UserService();
 		
-		sys.KMeans(3);
+		System.out.println(tes.ini("3"));
+		
+		
+		//System.out.println(tes.getColumVal("0","0"));
+		
 	}
 }

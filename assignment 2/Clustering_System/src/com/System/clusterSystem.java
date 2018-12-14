@@ -130,7 +130,7 @@ public class clusterSystem {
 	
 	public centroid createOneCentroid() {
 		int counter;
-		centroid da = new centroid("centroid");
+		centroid da = new centroid("centroid" + cen.size());
 		counter = 1;
 		for(int ad = 1; ad < words.length;ad++) {
 			//System.out.print((int) (Math.random() * maxValue[counter]));
@@ -139,13 +139,13 @@ public class clusterSystem {
 		return da;
 	}
 	
-	public int KMeans(int nrOfCentroids) {
+	public List<centroid> KMeans(int nrOfCentroids) {
 		createCentroids(nrOfCentroids);
 		
 		//System.out.println(iterativAlgoritm(0));
+		iterativAlgoritm(0);
 		
-		
-		return iterativAlgoritm(0);
+		return cen;
 	}
 	
 	private int iterativAlgoritm(int n) {
@@ -206,5 +206,26 @@ public class clusterSystem {
 	
 	public centroid getFromCentroid(int index) {
 		return cen.get(index);
+	}
+	
+	public String centroidToList(int index) {
+		centroid c = cen.get(index);
+		
+		String str = "";
+		String buffert;
+		for(String b : c.listOfBlogs()) {
+			buffert = b;
+			if(buffert.contains("\"")) {
+				//System.out.println("detected " + buffert);
+			
+			buffert = buffert.replaceAll("\"", "``");
+				//System.out.println("change: " + buffert);
+			}
+			
+			//str += "\""+ b + ", " + c.getName() + "\", ";
+			str += "\""+ buffert + "\", ";
+		}
+		
+		return str.substring(0, str.length()-2);
 	}
 }
